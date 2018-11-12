@@ -37,7 +37,6 @@ public class Utils {
 			});
 			System.out.println(counter.get() + " files has been read");
 			printWriter.close();
-			System.out.println("ada");
 		} catch (Exception e) {
 			return;
 		}
