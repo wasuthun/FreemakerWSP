@@ -2,7 +2,7 @@
 
 
 Result:
-![alt text]()
+![alt text](https://github.com/wasuthun/FreemakerWSP/blob/master/graph/Screen%20Shot%202561-11-12%20at%2016.12.20.png)
 
 
 Run R project and see graph(MacOS):
