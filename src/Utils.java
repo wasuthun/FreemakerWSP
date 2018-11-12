@@ -4,52 +4,43 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
 
- public static void main(String[] args) throws IOException {
-  FileWriter fileWriter = new FileWriter(new File("./DependencyData.csv"));
-  PrintWriter printWriter = new PrintWriter(fileWriter);
-  printWriter.print("Instability, Abstractness\n");
-  List<Double> ins = new ArrayList<>();
-  List<Double> abs = new ArrayList<>();
+	public static void main(String[] args) throws IOException {
 
-  try {
+		AtomicInteger counter = new AtomicInteger(0);
+		FileWriter fileWriter = new FileWriter(new File("./DependencyData.csv"));
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		printWriter.print("Instability,Abstractness\n");
 
-   AtomicInteger numFile = new AtomicInteger(0);
-   FileRead fr = new FileRead();
-   Files.walk(Paths.get("/Users/johnpaul/Desktop/Freemaker/freemarker/src/main/java/freemarker/")).forEach(file -> {
-    File dir = new File(file.toString());
-    if (dir.isDirectory()) {
-     for (String myFile : dir.list()) {
-      if (myFile.contains(".java")) {
-       fr.readInFile(dir.toString(), myFile);
-       numFile.incrementAndGet();
-      }
-     }
-     if (fr.getNa() != 0 && fr.getNc() != 0 && fr.getCa() != 0 && fr.getCe() != 0) {
-      PackageInfo pack = new PackageInfo(fr.getNa(), fr.getNc(), fr.getCa(), fr.getCe());
-      ins.add(pack.getInstability());
-      abs.add(pack.getAbstractness());
-      printWriter.printf("%.6f, %.6f \n", pack.getInstability(), pack.getInstability());
-     }
-    }
+		try {
+			Files.walk(Paths.get("/Users/johnpaul/Desktop/Freemaker/freemarker/src/main/java/freemarker/")).forEach(file -> {
+				File dir = new File(file.toString());
+				if (dir.isDirectory()) {
+					FileRead fr = new FileRead();
+					for (String myFile : dir.list()) {
+						if (myFile.contains(".java")) {
+							fr.readInFile(dir.toString(), myFile);
+						}
+					}
+					System.out.println(counter.incrementAndGet());
+					System.out.println(dir);
 
-   });
-   System.out.println(numFile.get());
-   for (int i = 0; i < ins.size() - 1; i++) {
-    System.out.printf("%.6f, %.6f \n", ins.get(i), abs.get(i));
-   }
-   printWriter.close();
+					PackageInfo pack = new PackageInfo(fr.getNa(), fr.getNc(), fr.getCa(), fr.getCe());
 
-  } catch (Exception e) {
-   return;
-  }
+					if (!Double.isNaN(pack.getInstability()) && !Double.isNaN(pack.getAbstractness()))
+						printWriter.printf("%.6f,%.6f \n", pack.getInstability(), pack.getAbstractness());
 
-
- }
+				}
+			});
+			System.out.println(counter.get() + " files has been read");
+			printWriter.close();
+			System.out.println("ada");
+		} catch (Exception e) {
+			return;
+		}
+	}
 
 }
