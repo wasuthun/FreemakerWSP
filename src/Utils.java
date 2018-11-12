@@ -16,7 +16,7 @@ public class Utils {
 		printWriter.print("Instability,Abstractness\n");
 
 		try {
-			Files.walk(Paths.get("/Users/johnpaul/Desktop/Freemaker/freemarker/src/main/java/freemarker/")).forEach(file -> {
+			Files.walk(Paths.get("/Users/johnpaul/Desktop/Freemaker/freemarker/")).forEach(file -> {
 				File dir = new File(file.toString());
 				if (dir.isDirectory()) {
 					FileRead fr = new FileRead();
