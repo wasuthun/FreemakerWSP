@@ -1,4 +1,4 @@
-# Apache Freemaker
+# Apache Freemarker
 
 Wasuthun Wanaphongthipakorn  5910545841<br />
 Varit    Assavavisidchai     5910545833<br />
